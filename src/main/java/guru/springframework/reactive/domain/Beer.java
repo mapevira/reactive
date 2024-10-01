@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -62,11 +64,13 @@ public class Beer {
     /**
      * The timestamp when the beer was created.
      */
+    @CreatedDate
     private LocalDateTime createdDate;
 
     /**
      * The timestamp when the beer was last modified.
      */
+    @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
 }

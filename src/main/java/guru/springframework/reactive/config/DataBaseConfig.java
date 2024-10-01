@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 
@@ -21,6 +22,7 @@ import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
  * @since jdk 1.17
  */
 @Configuration
+@EnableR2dbcAuditing
 public class DataBaseConfig {
 
     /**
