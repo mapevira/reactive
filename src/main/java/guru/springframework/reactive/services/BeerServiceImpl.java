@@ -6,6 +6,7 @@ import guru.springframework.reactive.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Service implementation for managing beer-related operations.
@@ -43,6 +44,20 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public Flux<BeerDTO> listBeers() {
         return beerRepository.findAll().map(beerMapper::beerToBeerDTO);
+    }
+
+    /**
+     * Retrieves a beer by its ID.
+     * <p>
+     * This method retrieves a Mono containing a BeerDTO object representing the beer with the given ID.
+     *
+     * @param beerId the ID of the beer to retrieve
+     * @return a Mono containing a BeerDTO object
+     */
+    @Override
+    public Mono<BeerDTO> getBeerById(Integer beerId) {
+        return beerRepository.findById(beerId)
+                .map(beerMapper::beerToBeerDTO);
     }
 
 }

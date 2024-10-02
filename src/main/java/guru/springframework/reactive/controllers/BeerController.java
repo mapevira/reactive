@@ -4,8 +4,10 @@ import guru.springframework.reactive.model.BeerDTO;
 import guru.springframework.reactive.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * REST controller for handling beer-related requests.
@@ -27,6 +29,14 @@ public class BeerController {
      */
     public static final String BEER_PATH = "/api/v2/beer";
 
+    /**
+     * The path for a specific beer by ID.
+     */
+    public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
+
+    /**
+     * Service for managing beer-related operations.
+     */
     private final BeerService beerService;
 
     /**
@@ -39,6 +49,19 @@ public class BeerController {
     @GetMapping(BeerController.BEER_PATH)
     Flux<BeerDTO> listBeers() {
         return beerService.listBeers();
+    }
+
+    /**
+     * Endpoint to retrieve a beer by its ID.
+     * <p>
+     * This method handles GET requests to the /api/v2/beer/{beerId} endpoint and returns a Mono containing a BeerDTO object.
+     *
+     * @param beerId the ID of the beer to retrieve
+     * @return a Mono containing a BeerDTO object
+     */
+    @GetMapping(BeerController.BEER_PATH_ID)
+    Mono<BeerDTO> getBeerById(@PathVariable Integer beerId) {
+        return beerService.getBeerById(beerId);
     }
 
 }

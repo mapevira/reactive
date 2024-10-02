@@ -2,6 +2,7 @@ package guru.springframework.reactive.services;
 
 import guru.springframework.reactive.model.BeerDTO;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Service interface for managing beer-related operations.
@@ -23,4 +24,13 @@ public interface BeerService {
      */
     Flux<BeerDTO> listBeers();
 
+    /**
+     * Retrieves a beer by its ID.
+     * <p>
+     * This method retrieves a Mono containing a BeerDTO object representing the beer with the given ID.
+     *
+     * @param beerId the ID of the beer to retrieve
+     * @return a Mono containing a BeerDTO object
+     */
+    Mono<BeerDTO> getBeerById(Integer beerId);
 }
