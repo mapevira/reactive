@@ -33,4 +33,15 @@ public interface BeerService {
      * @return a Mono containing a BeerDTO object
      */
     Mono<BeerDTO> getBeerById(Integer beerId);
+
+    /**
+     * Saves a beer.
+     * <p>
+     * This method saves the given BeerDTO object and returns a Mono containing the saved BeerDTO object.
+     *
+     * @param beerDTO the BeerDTO object to save
+     * @return a Mono containing the saved BeerDTO object
+     */
+    Mono<BeerDTO> saveBeer(BeerDTO beerDTO);
+
 }

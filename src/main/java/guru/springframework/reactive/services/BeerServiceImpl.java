@@ -60,4 +60,18 @@ public class BeerServiceImpl implements BeerService {
                 .map(beerMapper::beerToBeerDTO);
     }
 
+    /**
+     * Saves a beer.
+     * <p>
+     * This method saves the given BeerDTO object and returns a Mono containing the saved BeerDTO object.
+     *
+     * @param beerDTO the BeerDTO object to save
+     * @return a Mono containing the saved BeerDTO object
+     */
+    @Override
+    public Mono<BeerDTO> saveBeer(BeerDTO beerDTO) {
+        return beerRepository.save(beerMapper.beerDTOToBeer(beerDTO))
+                .map(beerMapper::beerToBeerDTO);
+    }
+
 }

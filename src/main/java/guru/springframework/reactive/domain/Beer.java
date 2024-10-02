@@ -59,7 +59,7 @@ public class Beer {
     /**
      * The price of the beer.
      */
-    private BigDecimal price;
+    private Double price;
 
     /**
      * The timestamp when the beer was created.

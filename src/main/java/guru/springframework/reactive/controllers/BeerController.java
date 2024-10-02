@@ -3,9 +3,9 @@ package guru.springframework.reactive.controllers;
 import guru.springframework.reactive.model.BeerDTO;
 import guru.springframework.reactive.services.BeerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -62,6 +62,24 @@ public class BeerController {
     @GetMapping(BeerController.BEER_PATH_ID)
     Mono<BeerDTO> getBeerById(@PathVariable Integer beerId) {
         return beerService.getBeerById(beerId);
+    }
+
+    /**
+     * Endpoint to save a beer.
+     * <p>
+     * This method handles POST requests to the /api/v2/beer endpoint and returns a Mono containing the saved BeerDTO object.
+     *
+     * @param beerDTO the BeerDTO object to save
+     * @return a Mono containing the saved BeerDTO object
+     */
+    @PostMapping(BeerController.BEER_PATH)
+    Mono<ResponseEntity<Void>> saveBeer(@RequestBody BeerDTO beerDTO) {
+        return beerService.saveBeer(beerDTO)
+                .map(saveBeerDTO -> ResponseEntity.created(UriComponentsBuilder
+                                .fromHttpUrl("http://localhost:8080" + BEER_PATH
+                                + "/" + saveBeerDTO.getId())
+                                .build().toUri())
+                        .build());
     }
 
 }
