@@ -1,6 +1,8 @@
 package guru.springframework.reactive.controllers;
 
 import guru.springframework.reactive.model.BeerDTO;
+import guru.springframework.reactive.services.BeerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -17,12 +19,15 @@ import reactor.core.publisher.Flux;
  * @since jdk 1.17
  */
 @RestController
+@RequiredArgsConstructor
 public class BeerController {
 
     /**
      * The base path for beer-related API endpoints.
      */
     public static final String BEER_PATH = "/api/v2/beer";
+
+    private final BeerService beerService;
 
     /**
      * Endpoint to list all beers.
@@ -33,8 +38,7 @@ public class BeerController {
      */
     @GetMapping(BeerController.BEER_PATH)
     Flux<BeerDTO> listBeers() {
-        return Flux.just(BeerDTO.builder().id(1).build(),
-                BeerDTO.builder().id(2).build());
+        return beerService.listBeers();
     }
 
 }
