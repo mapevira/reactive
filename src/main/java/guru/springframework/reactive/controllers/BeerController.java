@@ -9,6 +9,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * REST controller for handling beer-related requests.
  * <p>
@@ -74,12 +76,47 @@ public class BeerController {
      */
     @PostMapping(BeerController.BEER_PATH)
     Mono<ResponseEntity<Void>> saveBeer(@RequestBody BeerDTO beerDTO) {
-        return beerService.saveBeer(beerDTO)
-                .map(saveBeerDTO -> ResponseEntity.created(UriComponentsBuilder
-                                .fromHttpUrl("http://localhost:8080" + BEER_PATH
-                                + "/" + saveBeerDTO.getId())
-                                .build().toUri())
-                        .build());
+
+        return beerService.saveBeer(beerDTO).map(saveDto ->
+            ResponseEntity.created(UriComponentsBuilder
+                            .fromHttpUrl("http://localhost:8080" + BEER_PATH
+                                    + "/" + saveDto.getId())
+                            .build().toUri())
+                    .build());
+
     }
 
+    /**
+     * Endpoint to update a beer by its ID.
+     * <p>
+     * This method handles PUT requests to the /api/v2/beer/{beerId} endpoint and returns a Mono containing the updated BeerDTO object.
+     *
+     * @param beerId  the ID of the beer to update
+     * @param beerDTO the BeerDTO object with the updated data
+     * @return a Mono containing the updated BeerDTO object
+     */
+    @PutMapping(BeerController.BEER_PATH_ID)
+    Mono<ResponseEntity<Void>> updateBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
+
+        return beerService.updateBeer(beerId, beerDTO)
+                .map(updatedDto -> ResponseEntity.ok().build());
+
+    }
+
+    /**
+     * Endpoint to patch a beer by its ID.
+     * <p>
+     * This method handles PATCH requests to the /api/v2/beer/{beerId} endpoint and returns a Mono containing the updated BeerDTO object.
+     *
+     * @param beerId  the ID of the beer to update
+     * @param beerDTO the BeerDTO object with the updated data
+     * @return a Mono containing the updated BeerDTO object
+     */
+    @PatchMapping(BeerController.BEER_PATH_ID)
+    Mono<ResponseEntity<Void>> patchBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
+
+        return beerService.patchBeer(beerId, beerDTO)
+                .map(updatedDto -> ResponseEntity.ok().build());
+
+    }
 }
