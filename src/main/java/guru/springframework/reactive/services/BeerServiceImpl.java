@@ -132,4 +132,17 @@ public class BeerServiceImpl implements BeerService {
                 .map(beerMapper::beerToBeerDTO);
     }
 
+    /**
+     * Deletes a beer.
+     * <p>
+     * This method deletes the beer with the given ID.
+     *
+     * @param beerId the ID of the beer to delete
+     * @return a Mono<Void> indicating the completion of the operation
+     */
+    @Override
+    public Mono<Void> deleteBeer(Integer beerId) {
+        return beerRepository.deleteById(beerId);
+    }
+
 }

@@ -69,4 +69,14 @@ public interface BeerService {
      */
     Mono<BeerDTO> patchBeer(Integer beerId, BeerDTO beerDTO);
 
+    /**
+     * Deletes a beer.
+     * <p>
+     * This method deletes the beer with the given ID.
+     *
+     * @param beerId the ID of the beer to delete
+     * @return a Mono<Void> indicating the completion of the operation
+     */
+    Mono<Void> deleteBeer(Integer beerId);
+
 }
