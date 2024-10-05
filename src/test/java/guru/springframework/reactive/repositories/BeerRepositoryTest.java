@@ -42,7 +42,7 @@ class BeerRepositoryTest {
         return Beer.builder()
                 .beerName("Test Beer")
                 .beerStyle("IPA")
-                .price(BigDecimal.TEN)
+                .price(9.99)
                 .quantityOnHand(12)
                 .upc("123456789012")
                 .build();
