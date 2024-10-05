@@ -1,10 +1,10 @@
-# Reactive Customer Management
+# Reactive Management System
 
-This project is a reactive customer management application built with Spring Boot, using a service and repository-based architecture.
+This project is a reactive management system application built with Spring Boot, using a service and repository-based architecture. It includes functionalities for managing both beers and customers.
 
 ## Features
 
-- **Reactive CRUD**: Create, read, update, and delete customers in a reactive manner.
+- **Reactive CRUD**: Create, read, update, and delete beers and customers in a reactive manner.
 - **MapStruct**: Mapping between entities and DTOs.
 - **Spring Data R2DBC**: Reactive repositories for data access.
 - **Validation**: Input data validation using \`jakarta.validation\`.
@@ -19,8 +19,8 @@ This project is a reactive customer management application built with Spring Boo
 
 1. Clone the repository:
     \`\`\`sh
-    git clone https://github.com/your-username/reactive-customer-management.git
-    cd reactive-customer-management
+    git clone https://github.com/your-username/reactive-management-system.git
+    cd reactive-management-system
     \`\`\`
 
 2. Configure the database in the \`application.properties\` file:
@@ -38,7 +38,9 @@ This project is a reactive customer management application built with Spring Boo
 
 ## Usage
 
-The application exposes several REST endpoints for managing customers. Below are some of the available endpoints:
+The application exposes several REST endpoints for managing beers and customers. Below are some of the available endpoints:
+
+### Customer Endpoints
 
 - **List all customers**: \`GET /api/v2/customer\`
 - **Get a customer by ID**: \`GET /api/v2/customer/{customerId}\`
@@ -46,6 +48,15 @@ The application exposes several REST endpoints for managing customers. Below are
 - **Update an existing customer**: \`PUT /api/v2/customer/{customerId}\`
 - **Patch an existing customer**: \`PATCH /api/v2/customer/{customerId}\`
 - **Delete a customer**: \`DELETE /api/v2/customer/{customerId}\`
+
+### Beer Endpoints
+
+- **List all beers**: \`GET /api/v2/beer\`
+- **Get a beer by ID**: \`GET /api/v2/beer/{beerId}\`
+- **Create a new beer**: \`POST /api/v2/beer\`
+- **Update an existing beer**: \`PUT /api/v2/beer/{beerId}\`
+- **Patch an existing beer**: \`PATCH /api/v2/beer/{beerId}\`
+- **Delete a beer**: \`DELETE /api/v2/beer/{beerId}\`
 
 ## Contribution
 
