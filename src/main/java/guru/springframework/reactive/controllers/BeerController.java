@@ -78,8 +78,8 @@ public class BeerController {
     @PostMapping(BeerController.BEER_PATH)
     Mono<ResponseEntity<Void>> saveBeer(@Validated @RequestBody BeerDTO beerDTO) {
 
-        return beerService.saveBeer(beerDTO).map(saveDto ->
-            ResponseEntity.created(UriComponentsBuilder
+        return beerService.saveBeer(beerDTO)
+                .map(saveDto -> ResponseEntity.created(UriComponentsBuilder
                             .fromHttpUrl("http://localhost:8080" + BEER_PATH
                                     + "/" + saveDto.getId())
                             .build().toUri())

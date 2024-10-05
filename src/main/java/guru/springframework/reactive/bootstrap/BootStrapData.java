@@ -1,7 +1,9 @@
 package guru.springframework.reactive.bootstrap;
 
 import guru.springframework.reactive.domain.Beer;
+import guru.springframework.reactive.domain.Customer;
 import guru.springframework.reactive.repositories.BeerRepository;
+import guru.springframework.reactive.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +29,15 @@ import java.time.LocalDateTime;
 @Slf4j
 public class BootStrapData implements CommandLineRunner {
 
+    /**
+     * Repository for managing beer-related operations.
+     */
     private final BeerRepository beerRepository;
+
+    /**
+     * Repository for managing customer-related operations.
+     */
+    private final CustomerRepository customerRepository;
 
     /**
      * Initializes the database with sample beer data.
@@ -40,8 +50,36 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         loadBeerData();
+        loadCustomerData();
 
-        beerRepository.count().subscribe(count -> log.info("Count is: {}", count));
+        beerRepository.count().subscribe(count -> log.info("Beer Count is: {}", count));
+        customerRepository.count().subscribe(count -> log.info("Customer Count is: {}", count));
+    }
+
+    /**
+     * Populates the Customer repository with sample data.
+     * <p>
+     * This method checks if the Customer repository is empty and, if so, populates it with sample data.
+     */
+    private void loadCustomerData() {
+        customerRepository.count().subscribe(count -> {
+            if(count == 0){
+                customerRepository.save(Customer.builder()
+                                .customerName("Customer 1")
+                                .build())
+                        .subscribe();
+
+                customerRepository.save(Customer.builder()
+                                .customerName("Customer 2")
+                                .build())
+                        .subscribe();
+
+                customerRepository.save(Customer.builder()
+                                .customerName("Customer 3")
+                                .build())
+                        .subscribe();
+            }
+        });
     }
 
     /**
