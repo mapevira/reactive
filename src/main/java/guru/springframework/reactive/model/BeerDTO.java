@@ -1,5 +1,7 @@
 package guru.springframework.reactive.model;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,16 +37,20 @@ public class BeerDTO {
     /**
      * The name of the beer.
      */
+    @NotNull
+    @Size(min = 3, max = 255)
     private String beerName;
 
     /**
      * The style of the beer (e.g., IPA, Stout).
      */
+    @Size(min = 1, max = 255)
     private String beerStyle;
 
     /**
      * The Universal Product Code (UPC) for the beer.
      */
+    @Size(max = 25)
     private String upc;
 
     /**
