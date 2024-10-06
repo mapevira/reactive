@@ -103,4 +103,11 @@ class BeerControllerTest {
                 .expectStatus().isBadRequest();
     }
 
+    @Test
+    void testGetByIdNotFound() {
+        webTestClient.get().uri(BeerController.BEER_PATH_ID, 99)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }
