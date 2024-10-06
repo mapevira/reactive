@@ -76,4 +76,16 @@ class BeerControllerTest {
                 .expectStatus().isNoContent();
     }
 
+    @Test
+    void testCreateBeerBadData() {
+
+        BeerDTO beerDTO = beerMapper.beerToBeerDTO(BeerRepositoryTest.getTestBeer());
+        beerDTO.setBeerName(null);
+
+        webTestClient.post().uri(BeerController.BEER_PATH)
+                .header("Content-Type", "application/json")
+                .body(Mono.just(beerDTO), BeerDTO.class)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
 }
