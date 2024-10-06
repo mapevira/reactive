@@ -10,8 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * REST controller for handling beer-related requests.
  * <p>

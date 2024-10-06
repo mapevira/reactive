@@ -3,17 +3,19 @@ package guru.springframework.reactive.controllers;
 import guru.springframework.reactive.mappers.BeerMapper;
 import guru.springframework.reactive.model.BeerDTO;
 import guru.springframework.reactive.repositories.BeerRepositoryTest;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @AutoConfigureWebTestClient
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BeerControllerTest {
 
     @Autowired
@@ -23,6 +25,7 @@ class BeerControllerTest {
     BeerMapper beerMapper;
 
     @Test
+    @Order(1)
     void testListBeers() {
         webTestClient.get().uri(BeerController.BEER_PATH)
                 .exchange()
@@ -33,6 +36,7 @@ class BeerControllerTest {
     }
 
     @Test
+    @Order(2)
     void testGetById() {
         webTestClient.get().uri(BeerController.BEER_PATH_ID, 1)
                 .exchange()
@@ -55,6 +59,7 @@ class BeerControllerTest {
     }
 
     @Test
+    @Order(3)
     void testUpdateBeer() {
         webTestClient.put().uri(BeerController.BEER_PATH_ID, 1)
                 .header("Content-Type", "application/json")
@@ -64,9 +69,11 @@ class BeerControllerTest {
     }
 
     @Test
+    @Order(99)
     void testDeleteBeer() {
         webTestClient.delete().uri(BeerController.BEER_PATH_ID, 1)
                 .exchange()
                 .expectStatus().isNoContent();
     }
+
 }
