@@ -1,5 +1,6 @@
 package guru.springframework.reactive.controllers;
 
+import guru.springframework.reactive.mappers.BeerMapper;
 import guru.springframework.reactive.model.BeerDTO;
 import guru.springframework.reactive.repositories.BeerRepositoryTest;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ class BeerControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
+
+    @Autowired
+    BeerMapper beerMapper;
 
     @Test
     void testListBeers() {
@@ -50,4 +54,12 @@ class BeerControllerTest {
                 .expectHeader().valueEquals("Location", "http://localhost:8080" + BeerController.BEER_PATH + "/4");
     }
 
+    @Test
+    void testUpdateBeer() {
+        webTestClient.put().uri(BeerController.BEER_PATH + "/1")
+                .header("Content-Type", "application/json")
+                .body(Mono.just(BeerRepositoryTest.getTestBeer()), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 }
