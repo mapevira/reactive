@@ -115,7 +115,7 @@ public class BeerController {
     Mono<ResponseEntity<Void>> patchBeer(@PathVariable("beerId") Integer beerId, @Validated @RequestBody BeerDTO beerDTO) {
 
         return beerService.patchBeer(beerId, beerDTO)
-                .map(updatedDto -> ResponseEntity.ok().build());
+                .map(updatedDto -> ResponseEntity.noContent().build());
 
     }
 

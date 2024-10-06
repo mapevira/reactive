@@ -1,6 +1,5 @@
 package guru.springframework.reactive.controllers;
 
-import guru.springframework.reactive.mappers.CustomerMapper;
 import guru.springframework.reactive.model.CustomerDTO;
 import guru.springframework.reactive.services.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -102,7 +101,7 @@ public class CustomerController {
     @PutMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> updateCustomer(@PathVariable Integer customerId, @Validated @RequestBody CustomerDTO customerDTO) {
         return customerService.updateCustomer(customerId, customerDTO)
-                .map(updatedDto -> ResponseEntity.ok().build());
+                .map(updatedDto -> ResponseEntity.noContent().build());
     }
 
     /**
@@ -117,7 +116,7 @@ public class CustomerController {
     @PatchMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> patchCustomer(@PathVariable Integer customerId, @Validated @RequestBody CustomerDTO customerDTO) {
         return customerService.patchCustomer(customerId, customerDTO)
-                .map(updatedDto -> ResponseEntity.ok().build());
+                .map(updatedDto -> ResponseEntity.noContent().build());
     }
 
     /**
@@ -131,7 +130,7 @@ public class CustomerController {
     @DeleteMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> deleteCustomer(@PathVariable Integer customerId) {
         return customerService.deleteCustomer(customerId)
-                .map(response -> ResponseEntity.noContent().build());
+                .thenReturn(ResponseEntity.noContent().build());
     }
 
 }
