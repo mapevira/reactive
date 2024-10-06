@@ -112,12 +112,29 @@ class BeerControllerTest {
 
     @Test
     void testUpdateBeerNotFound() {
-
         BeerDTO beerDTO = beerMapper.beerToBeerDTO(BeerRepositoryTest.getTestBeer());
 
         webTestClient.put().uri(BeerController.BEER_PATH_ID, 999)
                 .header("Content-Type", "application/json")
                 .body(Mono.just(beerDTO), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchBeerNotFound() {
+        BeerDTO beerDTO = beerMapper.beerToBeerDTO(BeerRepositoryTest.getTestBeer());
+
+        webTestClient.patch().uri(BeerController.BEER_PATH_ID, 999)
+                .header("Content-Type", "application/json")
+                .body(Mono.just(beerDTO), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteBeerNotFound() {
+        webTestClient.delete().uri(BeerController.BEER_PATH_ID, 99)
                 .exchange()
                 .expectStatus().isNotFound();
     }

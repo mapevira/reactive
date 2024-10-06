@@ -36,6 +36,7 @@ public class BeerController {
      * The path for a specific beer by ID.
      */
     public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
+    public static final String BEER_NOT_FOUND = "Beer not found";
 
     /**
      * Service for managing beer-related operations.
@@ -65,7 +66,7 @@ public class BeerController {
     @GetMapping(BeerController.BEER_PATH_ID)
     Mono<BeerDTO> getBeerById(@PathVariable Integer beerId) {
         return beerService.getBeerById(beerId)
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Beer not found")));
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, BEER_NOT_FOUND)));
     }
 
     /**
@@ -101,7 +102,7 @@ public class BeerController {
     Mono<ResponseEntity<Void>> updateBeer(@PathVariable("beerId") Integer beerId, @Validated @RequestBody BeerDTO beerDTO) {
 
         return beerService.updateBeer(beerId, beerDTO)
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Beer not found")))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, BEER_NOT_FOUND)))
                 .map(updatedDto -> ResponseEntity.noContent().build());
 
     }
@@ -119,6 +120,7 @@ public class BeerController {
     Mono<ResponseEntity<Void>> patchBeer(@PathVariable("beerId") Integer beerId, @Validated @RequestBody BeerDTO beerDTO) {
 
         return beerService.patchBeer(beerId, beerDTO)
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, BEER_NOT_FOUND)))
                 .map(updatedDto -> ResponseEntity.noContent().build());
 
     }
@@ -126,7 +128,9 @@ public class BeerController {
     @DeleteMapping(BeerController.BEER_PATH_ID)
     Mono<ResponseEntity<Void>> deleteBeer(@PathVariable("beerId") Integer beerId) {
 
-        return beerService.deleteBeer(beerId)
+        return beerService.getBeerById(beerId)
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, BEER_NOT_FOUND)))
+                .map(beerDTO -> beerService.deleteBeer(beerDTO.getId()))
                 .thenReturn(ResponseEntity.noContent().build());
 
     }
