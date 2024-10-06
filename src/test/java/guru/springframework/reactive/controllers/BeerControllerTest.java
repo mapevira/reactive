@@ -1,11 +1,13 @@
 package guru.springframework.reactive.controllers;
 
 import guru.springframework.reactive.model.BeerDTO;
+import guru.springframework.reactive.repositories.BeerRepositoryTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +38,16 @@ class BeerControllerTest {
                 .jsonPath("$.id").isEqualTo("1")
                 .jsonPath("$.beerName").isEqualTo("Galaxy Cat")
                 .jsonPath("$.beerStyle").isEqualTo("Pale Ale");
+    }
+
+    @Test
+    void testCreateBeer() {
+        webTestClient.post().uri(BeerController.BEER_PATH)
+                .header("Content-Type", "application/json")
+                .body(Mono.just(BeerRepositoryTest.getTestBeer()), BeerDTO.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().valueEquals("Location", "http://localhost:8080" + BeerController.BEER_PATH + "/4");
     }
 
 }

@@ -7,14 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.context.annotation.Import;
 
-import java.math.BigDecimal;
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataR2dbcTest
 @Import(DataBaseConfig.class)
-class BeerRepositoryTest {
+public class BeerRepositoryTest {
 
     @Autowired
     BeerRepository beerRepository;
@@ -38,7 +35,7 @@ class BeerRepositoryTest {
 
     }
 
-    Beer getTestBeer() {
+    public static Beer getTestBeer() {
         return Beer.builder()
                 .beerName("Test Beer")
                 .beerStyle("IPA")
