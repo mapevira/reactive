@@ -34,7 +34,7 @@ class BeerControllerTest {
 
     @Test
     void testGetById() {
-        webTestClient.get().uri(BeerController.BEER_PATH + "/1")
+        webTestClient.get().uri(BeerController.BEER_PATH_ID, 1)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType("application/json")
@@ -56,9 +56,16 @@ class BeerControllerTest {
 
     @Test
     void testUpdateBeer() {
-        webTestClient.put().uri(BeerController.BEER_PATH + "/1")
+        webTestClient.put().uri(BeerController.BEER_PATH_ID, 1)
                 .header("Content-Type", "application/json")
                 .body(Mono.just(BeerRepositoryTest.getTestBeer()), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDeleteBeer() {
+        webTestClient.delete().uri(BeerController.BEER_PATH_ID, 1)
                 .exchange()
                 .expectStatus().isNoContent();
     }
