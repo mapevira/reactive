@@ -110,4 +110,16 @@ class BeerControllerTest {
                 .expectStatus().isNotFound();
     }
 
+    @Test
+    void testUpdateBeerNotFound() {
+
+        BeerDTO beerDTO = beerMapper.beerToBeerDTO(BeerRepositoryTest.getTestBeer());
+
+        webTestClient.put().uri(BeerController.BEER_PATH_ID, 999)
+                .header("Content-Type", "application/json")
+                .body(Mono.just(beerDTO), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }
